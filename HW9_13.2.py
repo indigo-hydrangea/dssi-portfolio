@@ -30,10 +30,8 @@ class Airport:
         self.total_wait_times = []
 
     def check(self, passenger):
-        """SimPy process: ID checker spends check_time minutes with this passenger."""
-        yield self.env.timeout(self.checktime)
-
-
+        """ID checker spends check_time minutes with this passenger."""
+        yield self.env.timeout(random.expovariate(1 / self.checktime))
 
 def passenger(env, name, ap):
     """Passenger process: wait for ID check, then head to shortest personal scanner."""
