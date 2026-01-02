@@ -6,13 +6,13 @@ import simpy
 import matplotlib.pyplot as plt
 
 Rand_Seed= 28
-NumWorkers = 5  # default number of ID/boarding-pass checkers
-CheckTime = 0.75  # average minutes an ID checker spends per passenger
-PassInter = 0.02  # average minutes between passenger arrivals (Poisson process)
-SimTime = 480  # minutes to simulate (480 = 8-hour “day”)
-NumPersonalLines = 4  # number of personal-check scanners
-PersonalMin = 0.5  # minimum minutes for personal scan
-PersonalMax = 1.0  # maximum minutes for personal scan
+NumWorkers = 5  #default number of ID/boarding-pass checkers
+CheckTime = 0.75  #average minutes an ID checker spends per passenger
+PassInter = 0.02  #average minutes between passenger arrivals (Poisson process)
+SimTime = 480  #minutes to simulate (480 = 8-hour day)
+NumPersonalLines = 4  #umber of personal-check scanners
+PersonalMin = 0.5  #minimum minutes for personal scan
+PersonalMax = 1.0  #maximum minutes for personal scan
 
 class Airport:
     """Airport security system with ID checkers and personal scanners."""
@@ -21,10 +21,10 @@ class Airport:
         self.env = env
         self.server = simpy.Resource(env, num_workers)
         self.checktime = check_time
-        # each scanner is modeled as its own resource with capacity 1
+        #each scanner is modeled as its own resource with capacity 1
         self.personal_lines = [simpy.Resource(env, capacity=1) for _ in range(num_personal)]
         self.personal_time = (personal_min, personal_max)
-        # keep simple lists of waits so we can average at the end
+        #keep simple lists of waits so we can average at the end
         self.id_wait_times = []
         self.personal_wait_times = []
         self.total_wait_times = []
@@ -38,7 +38,7 @@ class Airport:
 def passenger(env, name, ap):
     """Passenger process: wait for ID check, then head to shortest personal scanner."""
     arrival_time = env.now
-    # wait for an ID checker to become free
+    #wait for an ID checker to become free
     with ap.server.request() as request:
         yield request
 
@@ -47,13 +47,13 @@ def passenger(env, name, ap):
         yield env.process(ap.check(name))
 
     screen_arrival = env.now  # arrival time at the personal scanners
-    # choose the scanner with the smallest (queue + in-service) count
+    #choose the scanner with the smallest (queue + in-service) count
     line = min(ap.personal_lines, key=lambda r: len(r.queue) + r.count)
     with line.request() as screen_request:
         yield screen_request
         personal_wait = env.now - screen_arrival
         ap.personal_wait_times.append(personal_wait)
-        scan_time = random.uniform(*ap.personal_time)  # uniform(0.5, 1.0) minutes
+        scan_time = random.uniform(*ap.personal_time)  #uniform(0.5, 1.0) minutes
         yield env.timeout(scan_time)
 
     ap.total_wait_times.append(id_wait + personal_wait)
