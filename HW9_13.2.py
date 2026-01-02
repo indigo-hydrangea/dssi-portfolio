@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 Rand_Seed= 28
 NumWorkers = 5  #default number of ID/boarding-pass checkers
 CheckTime = 0.75  #average minutes an ID checker spends per passenger
-PassInter = 0.02  #average minutes between passenger arrivals (Poisson process)
+PassInter = 0.2  #passenger interarrival time; average minutes between passenger arrivals (Poisson process)
+# lambda = 5 passengers per minute, 1/lambda (1/0.2) gives passenger interarrival time
 SimTime = 480  #minutes to simulate (480 = 8-hour day)
 NumPersonalLines = 4  #umber of personal-check scanners
 PersonalMin = 0.5  #minimum minutes for personal scan
