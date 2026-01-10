@@ -18,11 +18,7 @@ It reads `diet.xls`, solves with the HiGHS solver, and prints the optimal foods,
 - Nutrition constraints with lower and upper bounds.
 - Extra rules for mutual exclusion and protein variety.
 
-## How to run
-```bash
-python3 HW11-2.py
-```
-
+#Note
 Input file: `diet.xls` must be in the same folder as the script.
 
 ## Adjust these parameters
