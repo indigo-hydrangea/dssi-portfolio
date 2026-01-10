@@ -15,9 +15,10 @@ The script:
 - performs mean imputation for a baseline,
 - builds regression models to impute missing values,
 - evaluates models with R-squared and adjusted R-squared, and
-- applies MICE (PMM) for multivariate imputation.
+- applies regression-based imputation with perturbation with MICE/PMM (predictive mean matching)
+
 
 ## Highlights
 - Missingness profiling and exploratory visualization.
-- Multiple imputation strategies (mean, regression, MICE/PMM).
+- Multiple imputation strategies (mean, regression, MICE).
 - Model comparison with explicit train/test split and fit metrics.
