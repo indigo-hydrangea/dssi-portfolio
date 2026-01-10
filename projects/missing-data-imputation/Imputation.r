@@ -2,7 +2,7 @@ library(visdat) #for data visualization
 
 
 #Load data
-data <- read.csv("breast-cancer-wisconsin.data.txt", header = FALSE, na.strings = "?")
+data <- read.csv("breast-cancer-wisconsin.txt", header = FALSE, na.strings = "?")
 #Treat "?" as NA
 vis_miss(data)
 
